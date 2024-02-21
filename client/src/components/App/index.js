@@ -1,8 +1,9 @@
 import React from 'react';
-import Review from './Review';
+import MealPlanningPage from './MealPlanningPage';
+import GoalsPreferencesPage from './GoalsPreferencesPage';
 
 function App() {
-  return <Review />;
+  return <GoalsPreferencesPage/>;
 }
 
 export default App;
