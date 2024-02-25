@@ -1,25 +1,41 @@
 import React from 'react';
-import {Container, Typography, Button, Box} from '@mui/material';
+import { Container, Typography, Button, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-const HomeScreen = () => { 
-    return (
-        <Container>
-            <Typography variant = "h2" gutterBottom>
-                Welcome to HealthyPlate
-            </Typography>
-            <Typography variant = "h5">
-                Plan your meals, track your nutrition, and achieve your dietary goals!
-            </Typography>
-            <Box mt= {4}>
-                <Button varaint = "contained" color="primary" href="/signup">
-                    Sign Up
-                </Button>
-                <Button variant = "outlined" color="primary" href = "/login" style = {{marginLeft:'20px'}}>
-                    Log In
-                </Button>
-            </Box>
-        </Container>
-    );
+const HomeScreen = () => {
+  const navigate = useNavigate();
+
+  return (
+    <Container>
+      <Typography variant="h2" gutterBottom>
+        Welcome to HealthyPlate
+      </Typography>
+      <Typography variant="h5">
+        Plan your meals, track your nutrition, and achieve your dietary goals!
+      </Typography>
+      <Box mt={4}>
+        
+        {/* Render Sign Up button */}
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate('/SignUp')}
+          style={{ marginLeft: '20px' }}
+        >
+          Sign Up
+        </Button>
+        {/* Render Log In button */}
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() => navigate('/LoginPage')}
+          style={{ marginLeft: '20px' }}
+        >
+          Log In
+        </Button>
+      </Box>
+    </Container>
+  );
 };
 
 export default HomeScreen;

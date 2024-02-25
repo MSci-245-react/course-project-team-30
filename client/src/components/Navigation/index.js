@@ -4,7 +4,8 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 
-const pages = ['GoalsPreferencesPage', 'MealPlanningPage'];
+const pages1 = ['Goals & Preferences'];
+const pages2 = ['Meal Planning']
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -20,10 +21,21 @@ const Navigation = () => {
         >
           Home
         </Button>
-        {pages.map((page) => (
+        {pages1.map((page) => (
           <Button
             key={page}
-            onClick={() => navigate(`/${page}`)}
+            onClick={() => navigate(`/GoalsPreferencesPage`)}
+            variant="text"
+            color="inherit"
+            sx={{ textTransform: 'capitalize' }}
+          >
+            {page}
+          </Button>
+        ))}
+        {pages2.map((page) => (
+          <Button
+            key={page}
+            onClick={() => navigate(`/MealPlanningPage`)}
             variant="text"
             color="inherit"
             sx={{ textTransform: 'capitalize' }}
