@@ -249,6 +249,9 @@ const MealPlanningPage = () => {
                                     <strong>Dietary Preference:</strong> {recipe.dietary}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
+                                    <strong>Cuisine:</strong> {recipe.cuisine}
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary">
                                     <strong>Ingredients:</strong> {recipe.ingredients.join(', ')}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
