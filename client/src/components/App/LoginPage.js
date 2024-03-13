@@ -1,7 +1,12 @@
+// LoginPage.js
 import React, { useState } from 'react';
 import { Typography, TextField, Button, Box, Container } from '@mui/material';
+import { withFirebase } from '/workspaces/course-project-team-30/client/src/components/Firebase/context.js';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import GoalsPreferencesPage from './GoalsPreferencesPage';
 
-const LoginPage = () => {
+const LoginPage = ({ firebase }) => {
+  const [loggedIn, setLoggedIn] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     password: ''
@@ -15,11 +20,21 @@ const LoginPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    try {
+      await firebase.doSignInWithEmailAndPassword(formData.username, formData.password);
+      setLoggedIn(true);
+    } catch (error) {
+      // Handle sign in error
+      console.log(error.message);
+    }
   };
 
+  //if (signedUp) {
+    //return <Redirect to="/" />; // Redirect to the Home page upon successful signup
+  //}
+  
   return (
     <Container maxWidth="sm">
       <Box sx={{ mt: 8, mb: 4 }}>
@@ -49,10 +64,10 @@ const LoginPage = () => {
           />
           <Button
             type="submit"
-            //onClick={() =>}
             variant="contained"
             color="primary"
             fullWidth
+            //onClick={setLoggedIn(true)}
           >
             Log In
           </Button>
@@ -62,4 +77,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default withFirebase(LoginPage);

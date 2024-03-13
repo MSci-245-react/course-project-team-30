@@ -1,7 +1,9 @@
+// SignUp.js
 import React, { useState } from 'react';
 import { Typography, TextField, Button, Box, Container } from '@mui/material';
+import { withFirebase } from '/workspaces/course-project-team-30/client/src/components/Firebase/context.js';
 
-const SignUp = () => {
+const SignUp = ({ firebase }) => {
   const [formData, setFormData] = useState({
     email: '',
     name: '',
@@ -17,9 +19,15 @@ const SignUp = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    try {
+      await firebase.doCreateUserWithEmailAndPassword(formData.email, formData.password);
+      // Handle successful sign up
+    } catch (error) {
+      // Handle sign up error
+      console.log(error.message);
+    }
   };
 
   return (
@@ -73,7 +81,6 @@ const SignUp = () => {
             type="submit"
             variant="contained"
             color="primary"
-            //onClick={() =>}
             fullWidth
           >
             Sign Up
@@ -84,4 +91,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default withFirebase(SignUp);
