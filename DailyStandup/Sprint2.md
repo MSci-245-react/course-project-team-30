@@ -1,5 +1,5 @@
 26Feb:
-- John:
+- John: Today researching firebase, tomorrow researching firebase, no issues
 - AJ:
 - TJ:
 27Feb:
@@ -11,7 +11,7 @@
 - AJ:
 - TJ:
 29Feb:
-- John:
+- John: Today researching firebase, tomorrow researching firebase, no issues
 - AJ:
 - TJ:
 01Mar:
@@ -23,7 +23,7 @@
 - AJ:
 - TJ:
 03Mar:
-- John:
+- John: Today researching firebase, tomorrow researching firebase, no issues
 - AJ:
 - TJ:
 04Mar:
@@ -35,7 +35,7 @@
 - AJ:
 - TJ:
 06Mar:
-- John:
+- John: Today making firebase account, connecting to app, tomorrow making sure firebase is connected on both ends, no issues
 - AJ:
 - TJ:
 07Mar:
@@ -47,7 +47,7 @@
 - AJ:
 - TJ:
 09Mar:
-- John:
+- John: Verifying user signups and logins are connecting to firebase, tomorrow looking into how to use firebase and SQL together, no issues
 - AJ:
 - TJ:
 10Mar:
@@ -55,6 +55,6 @@
 - AJ:
 - TJ:
 15Mar:
-- John:
+- John: Looking into how to use firebase and SQL together
 - AJ:
 - TJ:
