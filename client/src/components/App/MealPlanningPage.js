@@ -230,7 +230,7 @@ const MealPlanningPage = () => {
                 Meal Planning and Recipes
             </Typography>
             <TextField
-                label="Search for recipes"
+                label="Search for Recipes"
                 variant="outlined"
                 fullWidth
                 margin="normal"
