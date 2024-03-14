@@ -17,3 +17,17 @@ test('renders MealPlanningPage component', () => {
   const recipeCard = getByText(/Recipe \d/);
   expect(recipeCard).toBeInTheDocument();
 });
+
+describe('MealPlanningPage', () => {
+  test('renders search input', () => {
+    render(<MealPlanningPage />);
+    const searchInput = screen.getByLabelText(/Search for Recipes/i);
+    expect(searchInput).toBeInTheDocument();
+  });
+
+  test('renders recipe cards', () => {
+    render(<MealPlanningPage />);
+    const recipeCards = screen.getAllByRole('article');
+    expect(recipeCards.length).toBeGreaterThan(0);
+  });
+});

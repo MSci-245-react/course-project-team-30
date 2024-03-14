@@ -18,10 +18,10 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.static(path.join(__dirname, "client/build")));
 
 // API to read movies from the database
-app.post('/api/getMovies', (req, res) => {
+app.post('/api/getRecipes', (req, res) => {
 	let connection = mysql.createConnection(config);
 
-	const sql = `SELECT id, name, year, quality FROM movies`;
+	const sql = `SELECT id, ingredients, title`;
 
 	connection.query(sql, (error, results, fields) => {
 		if (error) {
@@ -33,13 +33,13 @@ app.post('/api/getMovies', (req, res) => {
 	connection.end();
 });
 
-// API to add a review to the database
-app.post('/api/addReview', (req, res) => {
-	const { userID, movieID, reviewTitle, reviewContent, reviewScore } = req.body;
+// API to add a preferences to the database
+app.post('/api/addPreferences', (req, res) => {
+	const { id, weightGoal, currentWeight, startingWeight, carbIntake, excludedIngredients, dietaryPreferences } = req.body;
 
 	let connection = mysql.createConnection(config);
 
-	const sql = `INSERT INTO Review (userID, movieID, reviewTitle, reviewContent, reviewScore) 
+	const sql = `INSERT INTO preferences (id, weightGoal, currentWeight, startingWeight, carbIntake, excludedIngredients, dietaryPreferences) 
 				 VALUES (?, ?, ?, ?, ?)`;
 
 	const data = [userID, movieID, reviewTitle, reviewContent, reviewScore];
@@ -51,6 +51,21 @@ app.post('/api/addReview', (req, res) => {
 		}
 
 		return res.status(200).json({ success: true });
+	});
+	connection.end();
+});
+
+app.post('/api/getRestrictions', (req, res) => {
+	let connection = mysql.createConnection(config);
+
+	const sql = `SELECT id, excludedIngredients, dietaryPreferences`;
+
+	connection.query(sql, (error, results, fields) => {
+		if (error) {
+			return console.error(error.message);
+		}
+		let string = JSON.stringify(results);
+		res.send({ express: string });
 	});
 	connection.end();
 });
