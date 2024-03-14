@@ -36,8 +36,8 @@
 - TJ:
 14Feb:
 - John: Today making routing from page to page, tomorrow adding mui to all pages, no issues
-- AJ:
-- TJ:
+- AJ: Designed weight tracking logic (CW-SW)/(WG-SW)
+- TJ: template repo from MSCI245 
 15Feb:
 - John:
 - AJ:
@@ -48,8 +48,8 @@
 - TJ:
 17Feb:
 - John: Today adding mui components to all pages, tomorrow developing sign-up page, no issues
-- AJ:
-- TJ:
+- AJ: Implemented weight planning logic into goals and preference page
+- TJ: decided to split into mealplanningpage.js
 18Feb:
 - John:
 - AJ:
@@ -60,8 +60,8 @@
 - TJ:
 20Feb:
 - John: Today building basic sign-up page, tomorrow making login page, no issues (verification?)
-- AJ:
-- TJ:
+- AJ: Implemented error handling for weight loss form
+- TJ:  worked on server.js link
 21Feb:
 - John:
 - AJ:
@@ -72,8 +72,8 @@
 - TJ:
 23Feb:
 - John: Today building basic login page, tomorrow testing, no issues
-- AJ:
-- TJ:
+- AJ: Added carb intake to preference page
+- TJ: begin ranking user stories
 24Feb:
 - John:
 - AJ:
@@ -81,4 +81,4 @@
 25Feb:
 - John: Today e2e tests and basic Jest tests
 - AJ:
-- TJ:
+- TJ: how to create a profile page

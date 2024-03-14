@@ -1,5 +1,8 @@
 import React from 'react';
 import { Container, Grid, TextField, Button, Card, CardContent, Typography} from '@mui/material';
+import GoalsPreferencesPage from './GoalsPreferencesPage';
+
+const serverURL = "";
 
 const MealPlanningPage = () => {
     // Define an array of recipe objects
@@ -222,7 +225,29 @@ const MealPlanningPage = () => {
             instructions: '[1.] Preheat oven to 375°F (190°C). [2.] Cut the tops off bell peppers and remove seeds and membranes. [3.] In a skillet, cook ground beef, diced onion, and minced garlic until beef is browned. [4.] Stir in cooked rice and tomato sauce. [5.] Spoon beef and rice mixture into bell peppers. [6.] Top each bell pepper with shredded cheddar cheese. [7.] Place stuffed bell peppers in a baking dish and cover with foil. [8.] Bake for 25-30 minutes or until peppers are tender. [9.] Serve hot.'
         }
     ];
+
+    const preferencesData = {
+        id: 1,
+        excludedIngredients: GoalsPreferencesPage.excludedIngredients,
+        dietaryPreferences: GoalsPreferencesPage.dietaryPreferences
+      };
     
+    const callApiAddPreferences = async (preferencesData) => {
+        const url = serverURL + "/api/addPreferences";
+        console.log("Sending review data to:", url);
+    
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(preferencesData),
+        });
+    
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        return body;
+      };
 
     return (
         <Container>

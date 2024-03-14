@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'; 
 import {Container, Typography, TextField, Button, FormControlLabel, Checkbox, Alert} from '@mui/material';
+import MealPlanningPage from './MealPlanningPage';
 
+const serverURL = "";
 
 const GoalsPreferencesPage =()=> { 
     const[weightGoal, setWeightGoal] = useState('');
@@ -24,6 +26,8 @@ const handleCheckboxChange = (event) => {
         ...dietaryPreferences,
         [event.target.name]: event.target.checked,
     });
+
+    return <MealPlanningPage preferencesData={GoalsPreferencesPage} />;
 };
 
 const handleSavePreferences = () => {
