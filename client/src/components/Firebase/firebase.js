@@ -2,7 +2,13 @@ import app from 'firebase/app';
 import 'firebase/auth';
 
 const firebaseConfig = {
-  //Enter your firebase API details
+  apiKey: "AIzaSyCX-qV4Rx5Ohpsuz8FWoHuyvmAUHQDsVcA",
+  authDomain: "term-project-9c5ce.firebaseapp.com",
+  projectId: "term-project-9c5ce",
+  storageBucket: "term-project-9c5ce.appspot.com",
+  messagingSenderId: "238054691528",
+  appId: "1:238054691528:web:cc1ca86a8aa1877afa8bfd",
+  measurementId: "G-FKM9QRRS10"
   };
 class Firebase {
   constructor() {

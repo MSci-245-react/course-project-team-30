@@ -1,70 +1,71 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import { Typography, TextField, Button, Box, Container } from '@mui/material';
+import { withFirebase } from '/workspaces/course-project-team-30/client/src/components/Firebase/context.js';
 
-import Typography from "@mui/material/Typography";
-import Paper from '@mui/material/Paper';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles'
-import Grid from "@mui/material/Grid";
+const SignIn = ({ firebase }) => {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
 
-//import BackgroundImage from "./backgroundImage.jpg"
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
 
-const serverURL = "";
-
-const opacityValue = 0.9;
-
-const lightTheme = createTheme({
-  palette: {
-    type: 'light',
-    background: {
-      default: "#ffffff"
-    },
-    primary: {
-      main: '#ef9a9a',
-      light: '#ffcccb',
-      dark: '#ba6b6c',
-      background: '#eeeeee'
-    },
-    secondary: {
-      main: "#b71c1c",
-      light: '#f05545',
-      dark: '#7f0000'
-    },
-  },
-});
-
-
-const SignIn = () => {
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await firebase.doSignInWithEmailAndPassword(formData.email, formData.password);
+      setLoggedIn(true);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  
   return (
-    <ThemeProvider theme={lightTheme}>
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        justify="flex-start"
-        alignItems="flex-start"
-        style={{ minHeight: '100vh' }}
-      >
-        <Grid item>
-
-          <Typography
-            variant={"h3"}
-            align="flex-start"
+    <Container maxWidth="sm">
+      <Box sx={{ mt: 8, mb: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          Log In
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            label="Email"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            fullWidth
+            required
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            label="Password"
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            fullWidth
+            required
+            sx={{ mb: 2 }}
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
           >
-
-
-              <React.Fragment>
-                Sign In page
-              </React.Fragment>
-
-          </Typography>
-
-        </Grid>
-      </Grid>
-    </ThemeProvider>
+            Sign In
+          </Button>
+        </form>
+      </Box>
+    </Container>
   );
-}
+};
 
-
-
-
-export default SignIn;
+export default withFirebase(SignIn);
