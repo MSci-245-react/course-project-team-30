@@ -28,10 +28,10 @@ const HomeScreen = () => {
         <Button
           variant="outlined"
           color="primary"
-          onClick={() => navigate('/LoginPage')}
+          onClick={() => navigate('/SignIn')}
           style={{ marginLeft: '20px' }}
         >
-          Log In
+          Sign In
         </Button>
       </Box>
     </Container>
