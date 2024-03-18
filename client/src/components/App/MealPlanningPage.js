@@ -1,11 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Grid, TextField, Button, Card, CardContent, Typography} from '@mui/material';
-import GoalsPreferencesPage from './GoalsPreferencesPage';
-
-const serverURL = "";
 
 const MealPlanningPage = () => {
-    // Define an array of recipe objects
     const recipes = [
         {
             name: 'Spaghetti Carbonara',
@@ -226,28 +222,16 @@ const MealPlanningPage = () => {
         }
     ];
 
-    const preferencesData = {
-        id: 1,
-        excludedIngredients: GoalsPreferencesPage.excludedIngredients,
-        dietaryPreferences: GoalsPreferencesPage.dietaryPreferences
-      };
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredRecipes, setFilteredRecipes] = useState(recipes);
+
+    const handleSearch = () => {
+        const filtered = recipes.filter(recipe =>
+            recipe.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setFilteredRecipes(filtered);
+    };
     
-    const callApiAddPreferences = async (preferencesData) => {
-        const url = serverURL + "/api/addPreferences";
-        console.log("Sending review data to:", url);
-    
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(preferencesData),
-        });
-    
-        const body = await response.json();
-        if (response.status !== 200) throw Error(body.message);
-        return body;
-      };
 
     return (
         <Container>
@@ -259,13 +243,14 @@ const MealPlanningPage = () => {
                 variant="outlined"
                 fullWidth
                 margin="normal"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
             />
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={handleSearch}>
                 Search
             </Button>
-            <Grid container spacing={3} style={{ marginTop: '20px'}}>
-                {/* Map through the recipes array to generate recipe cards */}
-                {recipes.map((recipe, index) => (
+            <Grid container spacing={3} style={{ marginTop: '20px' }}>
+                {filteredRecipes.map((recipe, index) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
                         <Card>
                             <CardContent>
