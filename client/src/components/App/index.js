@@ -1,29 +1,41 @@
-import React from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import HomeScreen from './HomeScreen';
-import MealPlanningPage from './MealPlanningPage';
-import GoalsPreferencesPage from './GoalsPreferencesPage';
-import Navigation from "../Navigation"
-import SignUp from "../SignUp/index.js"
-import SignIn from '../SignIn/index.js';
+import PrivateRoute from '../Navigation/PrivateRoute';
+import {FirebaseContext} from '../Firebase';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 
-function App() {
+const theme = createTheme({
+  //....
+})
+
+const App = () => {
+  const [authUser, setAuthUser] = useState(null);
+  const firebase = useContext(FirebaseContext);
+
+  useEffect(() => {
+    if(firebase){
+      const listener = firebase.auth.onAuthStateChanged(user => {
+        if(user){
+          setAuthUser(user);
+        } else {
+          setAuthUser(null);
+        }
+      });
+      return () => listener();
+    }
+  }, [firebase]);
+
+  const authenticated = !!authUser;
+
   return (
-    <Router>
-      <div>
-        <Navigation/>
-
-      <Routes>
-        <Route path="/GoalsPreferencesPage" element={<GoalsPreferencesPage />} />
-        <Route path="/MealPlanningPage" element={<MealPlanningPage />} />
-        <Route path="/SignOut element={<>}"/>
-        <Route path="/" element={<HomeScreen />} />
-        <Route path="/SignUp" element={<SignUp />} />
-        <Route path="/SignIn" element={<SignIn />} />
-      </Routes>
-    </div>
-  </Router>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <div>
+          <PrivateRoute authenticated={authenticated} authUser={authUser} />
+        </div>
+      </Router>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;

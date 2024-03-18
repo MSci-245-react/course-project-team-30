@@ -1,78 +1,64 @@
-import * as React from 'react';
+import React, {useEffect, useState, useContext} from 'react';
+import { Container, Typography, Button, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { FirebaseContext } from '../Firebase';
 
-import Typography from "@mui/material/Typography";
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles'
-import Grid from "@mui/material/Grid";
-import CssBaseline from '@mui/material/CssBaseline';
-import callApiLoadUserSettings from './callApiLoadUserSettings.js';
-const serverURL = "";
+const HomePage = () => {
+  const [userID, setuserID] = useState(null);
+  const firebase = useContext(FirebaseContext);
+  const [idToken, setIdToken] = useState('');
 
+  const navigate = useNavigate();
 
-const theme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try{
+        const user = firebase.auth.currentUser;
+        if(user){
+          const token = await user.getIdToken();
+          setIdToken(token);
+          setuserID(user.uid);
+        }
+      }catch(error){
+        console.error('Error fetching details:',
+        error);
+      }
+    };
+    fetchUserDetails();
+  }, [firebase]);
 
-
-const Home = () => {
-
-  const [userID, setUserID] = React.useState(1);
-  const [mode, setMode] = React.useState(0);
-
-  
-  React.useEffect(() => {
-    //loadUserSettings();
-  }, []);
-  
-  const loadUserSettings = () => {
-    callApiLoadUserSettings(serverURL, userID)
-      .then(res => {
-        //console.log("parsed: ", res[0].mode)
-        setMode(res[0].mode);
-      });
-  }
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        justify="flex-start"
-        alignItems="flex-start"
-        sx={{ 
-          minHeight: '100vh',
-          marginTop: theme.spacing(8),
-          marginLeft: theme.spacing(4)
-        }}
-      >
-        <Grid item>
-
-          <Typography
-            variant={"h3"}
-          >
-
-            {mode === 0 ? (
-              <React.Fragment>
-                Welcome to MSci245!
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                Welcome back!
-              </React.Fragment>
-            )}
-
-          </Typography>
-
-        </Grid>
-      </Grid>
-    </ThemeProvider>
+    <Container>
+      <Typography variant="h2" gutterBottom>
+        Welcome to HealthyPlate
+      </Typography>
+      <Typography variant="h5">
+        Plan your meals, track your nutrition, and achieve your dietary goals!
+      </Typography>
+      <Box mt={4}>
+        
+        {/* Render Sign Up button */}
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate('/SignUp')}
+          style={{ marginLeft: '20px' }}
+        >
+          Sign Up
+        </Button>
+        {/* Render Log In button */}
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() => navigate('/SignIn')}
+          style={{ marginLeft: '20px' }}
+        >
+          Sign In
+        </Button>
+      </Box>
+    </Container>
   );
-}
+};
 
-
-
-
-export default Home;
+export default HomePage;

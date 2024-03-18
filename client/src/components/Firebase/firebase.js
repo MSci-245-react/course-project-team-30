@@ -1,5 +1,13 @@
-import app from 'firebase/app';
-import 'firebase/auth';
+
+import {initializeApp} from 'firebase/app';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  sendPasswordResetEmail,
+  updatePassword,
+} from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCX-qV4Rx5Ohpsuz8FWoHuyvmAUHQDsVcA",
@@ -9,31 +17,47 @@ const firebaseConfig = {
   messagingSenderId: "238054691528",
   appId: "1:238054691528:web:cc1ca86a8aa1877afa8bfd",
   measurementId: "G-FKM9QRRS10"
-  };
+};
+
+const app = initializeApp(firebaseConfig);
+
 class Firebase {
   constructor() {
-    app.initializeApp(firebaseConfig);
     this.auth = app.auth();
   }
   
   // *** Auth API ***
 
   doCreateUserWithEmailAndPassword = (email, password) =>
-  this.auth.createUserWithEmailAndPassword(email, password);
+    createUserWithEmailAndPassword(email, password);
 
   doSignInWithEmailAndPassword = (email, password) =>
-  this.auth.signInWithEmailAndPassword(email, password);
+    signInWithEmailAndPassword(email, password);
 
-  doSignOut = () => this.auth.signOut();
+  doSignOut = () => signOut();
 
-  doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
+  doPasswordReset = email => sendPasswordResetEmail(email);
 
   doPasswordUpdate = password =>
-    this.auth.currentUser.updatePassword(password);
+    updatePassword(this.auth.currentUser, password);
 
-  doGetIdToken = (bool) => {
-    return this.auth.currentUser.getIdToken(/* forceRefresh */ bool);
-  }
+  doGetIdToken = () => {
+    return new Promise((resolve, reject) => {
+      const user = this.auth.currentUser;
+      if(user){
+        user
+          .doGetIdToken()
+          .then(token => {
+            resolve(token);
+          })
+          .catch(error => {
+            reject(error);
+          });
+      } else {
+        reject(new Error('No user is signed in.'));
+      }
+    });
+  };
 
   doGetUserByEmail = email => this.auth.getUserByEmail(email);
 
