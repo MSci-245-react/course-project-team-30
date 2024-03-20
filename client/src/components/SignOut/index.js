@@ -1,14 +1,13 @@
 import React from 'react';
 import { Button } from '@mui/material';
-import { withFirebase } from '/workspaces/course-project-team-30/client/src/components/Firebase/context.js';
+import { withFirebase } from '../Firebase';
 
 const SignOut = ({ firebase }) => {
-  const handleSignOut = async () => {
-    try {
-      await firebase.doSignOut();
-    } catch (error) {
-      console.log(error.message);
-    }
+  const handleSignOut = () => {
+    firebase
+      .doSignOut()
+      .then(() => console.log('Signed out successfully'))
+      .catch(error => console.error('Sign out error:', error));
   };
 
   return (

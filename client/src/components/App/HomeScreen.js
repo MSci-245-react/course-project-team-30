@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Typography, Button, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const HomeScreen = () => {
+const LandingPage = () => {
   const navigate = useNavigate();
 
   return (
@@ -38,4 +38,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default LandingPage;

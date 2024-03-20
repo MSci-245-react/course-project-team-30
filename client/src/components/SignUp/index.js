@@ -1,28 +1,32 @@
 import React, { useState } from 'react';
 import { Typography, TextField, Button, Box, Container } from '@mui/material';
-import { withFirebase } from '/workspaces/course-project-team-30/client/src/components/Firebase/context.js';
+import { withFirebase } from '../Firebase/context.js';
+import {useNavigate} from 'react-router-dom';
+import {useTheme} from '@mui/material/styles';
 
 const SignUp = ({ firebase }) => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
+  const theme = useTheme();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+  const handleChange = event => {
+    const { name, value } = event.target;
+    if(name === 'email') setEmail(value);
+    else if(name === 'password') setPassword(value);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await firebase.doCreateUserWithEmailAndPassword(formData.email, formData.password);
-    } catch (error) {
-      console.log(error.message);
-    }
+  const handleSubmit = event => {
+    event.preventDefault();
+    firebase
+      .doCreateUserEmailAndPassword(email, password)
+      .then(() => {
+        navigate('/');
+      })
+      .catch(error => {
+        setError(error);
+      });
   };
 
   return (
@@ -36,7 +40,6 @@ const SignUp = ({ firebase }) => {
             label="Email"
             type="email"
             name="email"
-            value={formData.email}
             onChange={handleChange}
             fullWidth
             required
@@ -46,7 +49,6 @@ const SignUp = ({ firebase }) => {
             label="Password"
             type="password"
             name="password"
-            value={formData.password}
             onChange={handleChange}
             fullWidth
             required
