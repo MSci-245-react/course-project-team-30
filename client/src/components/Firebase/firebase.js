@@ -23,7 +23,7 @@ const app = initializeApp(firebaseConfig);
 
 class Firebase {
   constructor() {
-    this.auth = app.auth();
+    this.auth = getAuth(app);
   }
   
   // *** Auth API ***
